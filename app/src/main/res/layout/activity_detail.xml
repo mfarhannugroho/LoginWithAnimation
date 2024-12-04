@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#FFFFFF"
+    android:id="@+id/main"
+    tools:context=".view.DetailActivity">
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/back_button"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Image Section -->
+            <ImageView
+                android:id="@+id/header_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image" />
+
+            <!-- Title Section -->
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:text="Judul"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#000000" />
+
+            <!-- Description Section -->
+            <TextView
+                android:id="@+id/description_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp"
+                android:text="Deskripsi"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:justificationMode="inter_word"
+                android:lineSpacingExtra="2dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Fixed Back Button -->
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Back"
+        android:textColor="#FFFFFF"
+        android:paddingVertical="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"/>
+</RelativeLayout>
