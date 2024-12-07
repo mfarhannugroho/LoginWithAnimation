@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.dicoding.picodiploma.loginwithanimation"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.dicoding.picodiploma.loginwithanimation"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -50,5 +50,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.activity:activity-ktx:1.7.2")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
 
 }
