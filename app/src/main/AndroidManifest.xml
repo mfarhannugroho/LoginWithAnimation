@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginWithAnimation">
         <activity
-            android:name=".view.AddStoryActivity"
+            android:name=".view.addstory.AddStoryActivity"
             android:exported="false" />
         <activity
             android:name=".view.detail.DetailActivity"

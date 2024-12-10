@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.picodiploma.loginwithanimation.R
 import com.dicoding.picodiploma.loginwithanimation.data.adapter.StoryAdapter
-import com.dicoding.picodiploma.loginwithanimation.view.detail.DetailActivity
 import com.dicoding.picodiploma.loginwithanimation.view.ViewModelFactory
+import com.dicoding.picodiploma.loginwithanimation.view.addstory.AddStoryActivity
+import com.dicoding.picodiploma.loginwithanimation.view.detail.DetailActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -42,6 +44,11 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val token = viewModel.getToken()
             viewModel.getStory(token)
+        }
+
+        findViewById<FloatingActionButton>(R.id.fab_add_story).setOnClickListener {
+            val intent = Intent(this, AddStoryActivity::class.java)
+            startActivity(intent)
         }
     }
 }
