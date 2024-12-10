@@ -13,7 +13,7 @@
             android:name=".view.AddStoryActivity"
             android:exported="false" />
         <activity
-            android:name=".view.DetailActivity"
+            android:name=".view.detail.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".view.welcome.WelcomeActivity"

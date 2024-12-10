@@ -10,7 +10,10 @@ import com.bumptech.glide.Glide
 import com.dicoding.picodiploma.loginwithanimation.R
 import com.dicoding.picodiploma.loginwithanimation.data.response.ListStory
 
-class StoryAdapter(private val stories: List<ListStory>) : RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
+class StoryAdapter(
+    private val stories: List<ListStory>,
+    private val onItemClickListener: (ListStory) -> Unit
+) : RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)
@@ -20,6 +23,7 @@ class StoryAdapter(private val stories: List<ListStory>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
         val story = stories[position]
         holder.bind(story)
+        holder.itemView.setOnClickListener { onItemClickListener(story) }
     }
 
     override fun getItemCount(): Int = stories.size

@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.loginwithanimation.view.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.picodiploma.loginwithanimation.R
 import com.dicoding.picodiploma.loginwithanimation.data.adapter.StoryAdapter
+import com.dicoding.picodiploma.loginwithanimation.view.detail.DetailActivity
 import com.dicoding.picodiploma.loginwithanimation.view.ViewModelFactory
 import kotlinx.coroutines.launch
 
@@ -26,12 +28,13 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        storyAdapter = StoryAdapter(emptyList())
-        recyclerView.adapter = storyAdapter
-
         viewModel.listStory.observe(this) { stories ->
             stories?.let {
-                storyAdapter = StoryAdapter(it)
+                storyAdapter = StoryAdapter(it) { story ->
+                    val intent = Intent(this, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_STORY_ID, story.id)
+                    startActivity(intent)
+                }
                 recyclerView.adapter = storyAdapter
             }
         }
