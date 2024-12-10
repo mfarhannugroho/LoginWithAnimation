@@ -2,6 +2,7 @@ package com.dicoding.picodiploma.loginwithanimation.view.signup
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -9,12 +10,24 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import com.dicoding.picodiploma.loginwithanimation.data.factory.SignupViewModelFactory
+import com.dicoding.picodiploma.loginwithanimation.data.repository.UserRepository
 import com.dicoding.picodiploma.loginwithanimation.databinding.ActivitySignupBinding
+import com.dicoding.picodiploma.loginwithanimation.data.network.ApiConfig
+import com.dicoding.picodiploma.loginwithanimation.data.pref.UserPreference
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+    private val signupViewModel: SignupViewModel by viewModels {
+        SignupViewModelFactory(UserRepository.getInstance(UserPreference.getInstance(dataStore), ApiConfig.getApiService("")))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

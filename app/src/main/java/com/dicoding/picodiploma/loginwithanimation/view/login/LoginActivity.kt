@@ -1,7 +1,9 @@
+// LoginActivity.kt
 package com.dicoding.picodiploma.loginwithanimation.view.login
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -13,12 +15,18 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.dicoding.picodiploma.loginwithanimation.data.pref.UserModel
 import com.dicoding.picodiploma.loginwithanimation.databinding.ActivityLoginBinding
 import com.dicoding.picodiploma.loginwithanimation.view.ViewModelFactory
 import com.dicoding.picodiploma.loginwithanimation.view.main.MainActivity
+import com.google.gson.Gson
+import retrofit2.HttpException
 
 class LoginActivity : AppCompatActivity() {
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
     private val viewModel by viewModels<LoginViewModel> {
         ViewModelFactory.getInstance(this)
     }
@@ -32,6 +40,32 @@ class LoginActivity : AppCompatActivity() {
         setupView()
         setupAction()
         playAnimation()
+        observeViewModel()
+    }
+
+    private fun observeViewModel() {
+        viewModel.loggedInUser.observe(this) { user ->
+            user?.let {
+                AlertDialog.Builder(this).apply {
+                    setTitle("Yeah!")
+                    setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")
+                    setPositiveButton("Lanjut") { _, _ ->
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+                    create()
+                    show()
+                }
+            }
+        }
+
+        viewModel.isLogin.observe(this) { isLogin ->
+            if (!isLogin) {
+                binding.passwordEditTextLayout.error = "Login failed. Please check your credentials."
+            }
+        }
     }
 
     private fun setupView() {
@@ -66,19 +100,7 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             if (password.length >= 8) {
-                viewModel.saveSession(UserModel(email, "sample_token"))
-                AlertDialog.Builder(this).apply {
-                    setTitle("Yeah!")
-                    setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")
-                    setPositiveButton("Lanjut") { _, _ ->
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
-                        finish()
-                    }
-                    create()
-                    show()
-                }
+                viewModel.login(email, password)
             } else {
                 binding.passwordEditTextLayout.error = "Password must be at least 8 characters"
             }
@@ -118,5 +140,4 @@ class LoginActivity : AppCompatActivity() {
             startDelay = 100
         }.start()
     }
-
 }

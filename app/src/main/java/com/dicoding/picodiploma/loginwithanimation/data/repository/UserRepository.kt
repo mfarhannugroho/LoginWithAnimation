@@ -1,6 +1,5 @@
 package com.dicoding.picodiploma.loginwithanimation.data.repository
 
-import android.util.Log
 import com.dicoding.picodiploma.loginwithanimation.data.network.ApiService
 import com.dicoding.picodiploma.loginwithanimation.data.pref.UserModel
 import com.dicoding.picodiploma.loginwithanimation.data.pref.UserPreference
@@ -36,9 +35,10 @@ class UserRepository private constructor(
     companion object {
         @Volatile
         private var instance: UserRepository? = null
+        
         fun getInstance(
             userPreference: UserPreference,
-            apiService: ApiService,
+            apiService: ApiService
         ): UserRepository =
             instance ?: synchronized(this) {
                 instance ?: UserRepository(userPreference, apiService)
