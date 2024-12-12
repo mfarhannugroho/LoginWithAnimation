@@ -1,4 +1,3 @@
-// PasswordEditText.kt
 package com.dicoding.picodiploma.loginwithanimation.customview
 
 import android.content.Context
