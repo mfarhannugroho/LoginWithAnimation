@@ -19,6 +19,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp" />
 
+    <!-- Tombol Logout di sebelah kanan judul -->
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_toEndOf="@id/title_text"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+
     <!-- RecyclerView di bawah judul -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
