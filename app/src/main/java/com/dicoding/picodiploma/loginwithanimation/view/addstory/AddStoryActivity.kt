@@ -1,6 +1,8 @@
 package com.dicoding.picodiploma.loginwithanimation.view.addstory
 
 import android.app.Activity
+import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -20,6 +22,9 @@ import com.dicoding.picodiploma.loginwithanimation.R
 import com.dicoding.picodiploma.loginwithanimation.view.ViewModelFactory
 import com.dicoding.picodiploma.loginwithanimation.view.main.MainActivity
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 class AddStoryActivity : AppCompatActivity() {
 
@@ -87,13 +92,27 @@ class AddStoryActivity : AppCompatActivity() {
         return Uri.parse(path)
     }
 
+    private fun getFileFromUri(context: Context, uri: Uri): File {
+        val contentResolver: ContentResolver = context.contentResolver
+        val file = File(context.cacheDir, "temp_image")
+        val inputStream: InputStream? = contentResolver.openInputStream(uri)
+        val outputStream = FileOutputStream(file)
+        inputStream?.use { input ->
+            outputStream.use { output ->
+                input.copyTo(output)
+            }
+        }
+        return file
+    }
+
     private fun uploadStory() {
         val description = descriptionEditText.text.toString()
         val imageUri = selectedImageUri
 
         if (description.isNotEmpty() && imageUri != null) {
             lifecycleScope.launch {
-                viewModel.uploadStory(description, imageUri)
+                val imageFile = getFileFromUri(this@AddStoryActivity, imageUri)
+                viewModel.uploadStory(description, Uri.fromFile(imageFile))
                 val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
