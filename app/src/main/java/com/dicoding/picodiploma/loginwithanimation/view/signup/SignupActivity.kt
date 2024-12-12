@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
+import androidx.lifecycle.lifecycleScope
 import com.dicoding.picodiploma.loginwithanimation.data.factory.SignupViewModelFactory
 import com.dicoding.picodiploma.loginwithanimation.data.repository.UserRepository
 import com.dicoding.picodiploma.loginwithanimation.databinding.ActivitySignupBinding
@@ -20,6 +21,7 @@ import com.dicoding.picodiploma.loginwithanimation.data.network.ApiConfig
 import com.dicoding.picodiploma.loginwithanimation.data.pref.UserPreference
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.launch
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
@@ -55,15 +57,27 @@ class SignupActivity : AppCompatActivity() {
         binding.signupButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+            val name = binding.nameEditText.text.toString()
             if (password.length >= 8) {
-                AlertDialog.Builder(this).apply {
-                    setTitle("Yeah!")
-                    setMessage("Akun dengan $email sudah jadi nih. Yuk, login dan belajar coding.")
-                    setPositiveButton("Lanjut") { _, _ ->
-                        finish()
+                lifecycleScope.launch {
+                    try {
+                        val response = ApiConfig.getApiService("").register(name, email, password)
+                        if (response.error == false) {
+                            AlertDialog.Builder(this@SignupActivity).apply {
+                                setTitle("Yeah!")
+                                setMessage("Akun dengan $email sudah jadi nih. Yuk, login dan belajar coding.")
+                                setPositiveButton("Lanjut") { _, _ ->
+                                    finish()
+                                }
+                                create()
+                                show()
+                            }
+                        } else {
+                            binding.passwordEditTextLayout.error = response.message
+                        }
+                    } catch (e: Exception) {
+                        binding.passwordEditTextLayout.error = "Registration failed. Please try again."
                     }
-                    create()
-                    show()
                 }
             } else {
                 binding.passwordEditTextLayout.error = "Password must be at least 8 characters"
