@@ -31,7 +31,7 @@ class ViewModelFactory(
                 DetailViewModel(storyIDRepository) as T
             }
             modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
-                AddStoryViewModel(storyRepository) as T
+                AddStoryViewModel(storyRepository, userRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

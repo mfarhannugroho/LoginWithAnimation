@@ -17,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import com.dicoding.picodiploma.loginwithanimation.data.factory.SignupViewModelFactory
 import com.dicoding.picodiploma.loginwithanimation.data.repository.UserRepository
 import com.dicoding.picodiploma.loginwithanimation.databinding.ActivitySignupBinding
-import com.dicoding.picodiploma.loginwithanimation.data.network.ApiConfig
 import com.dicoding.picodiploma.loginwithanimation.data.pref.UserPreference
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore

@@ -28,7 +28,6 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
-    // LoginViewModel.kt
     fun login(email: String, password: String) {
         _isLoading.value = true
         viewModelScope.launch {
@@ -42,6 +41,8 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                         _loggedInUser.postValue(user)
                         if (user != null) {
                             saveSession(user)
+                            repository.saveToken(loginResult.token)
+                            Log.d("LoginViewModel", "Token saved: ${loginResult.token}")
                         }
                     }
                 } else {

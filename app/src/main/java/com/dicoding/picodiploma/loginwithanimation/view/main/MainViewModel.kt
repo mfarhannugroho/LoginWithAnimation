@@ -1,11 +1,11 @@
 package com.dicoding.picodiploma.loginwithanimation.view.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.dicoding.picodiploma.loginwithanimation.data.network.ApiConfig
 import com.dicoding.picodiploma.loginwithanimation.data.pref.UserModel
 import com.dicoding.picodiploma.loginwithanimation.data.repository.StoryRepository
 import com.dicoding.picodiploma.loginwithanimation.data.repository.UserRepository
@@ -32,6 +32,17 @@ class MainViewModel(private val repository: UserRepository, private val story : 
     fun logout() {
         viewModelScope.launch {
             repository.logout()
+        }
+    }
+
+    fun logToken() {
+        viewModelScope.launch {
+            try {
+                val token = repository.getToken()
+                Log.d("MainViewModel", "Token retrieved: $token")
+            } catch (e: Exception) {
+                Log.e("MainViewModel", "Failed to retrieve token: ${e.message}", e)
+            }
         }
     }
 

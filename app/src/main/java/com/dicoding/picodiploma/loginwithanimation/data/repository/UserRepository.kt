@@ -6,6 +6,8 @@ import com.dicoding.picodiploma.loginwithanimation.data.pref.UserPreference
 import com.dicoding.picodiploma.loginwithanimation.data.response.LoginResponse
 import com.dicoding.picodiploma.loginwithanimation.data.response.RegisterResponse
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
 class UserRepository private constructor(
     private val userPreference: UserPreference,
@@ -30,6 +32,14 @@ class UserRepository private constructor(
 
     suspend fun login(email: String, password: String): LoginResponse {
         return apiService.login(email, password)
+    }
+
+    suspend fun saveToken(token: String) {
+        userPreference.saveToken(token)
+    }
+
+    suspend fun getToken(): String {
+        return userPreference.getSession().map { it.token }.first()
     }
 
     companion object {
