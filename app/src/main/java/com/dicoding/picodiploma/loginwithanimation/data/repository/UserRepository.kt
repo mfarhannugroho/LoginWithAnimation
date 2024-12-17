@@ -42,10 +42,14 @@ class UserRepository private constructor(
         return userPreference.getSession().map { it.token }.first()
     }
 
+    fun getUserPreference(): UserPreference {
+        return userPreference
+    }
+
     companion object {
         @Volatile
         private var instance: UserRepository? = null
-        
+
         fun getInstance(
             userPreference: UserPreference,
             apiService: ApiService
