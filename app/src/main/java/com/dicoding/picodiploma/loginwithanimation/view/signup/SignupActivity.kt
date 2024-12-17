@@ -1,4 +1,3 @@
-// SignupActivity.kt
 package com.dicoding.picodiploma.loginwithanimation.view.signup
 
 import android.animation.AnimatorSet
@@ -6,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -76,6 +76,7 @@ class SignupActivity : AppCompatActivity() {
                             binding.passwordEditTextLayout.error = response.message
                         }
                     } catch (e: Exception) {
+                        Log.e("SignupActivity", "Registration failed: ${e.message}", e)
                         binding.passwordEditTextLayout.error = "Registration failed. Please try again."
                     }
                 }

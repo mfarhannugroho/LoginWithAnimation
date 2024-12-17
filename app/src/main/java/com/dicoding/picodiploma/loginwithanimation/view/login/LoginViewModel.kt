@@ -28,6 +28,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
+    // LoginViewModel.kt
     fun login(email: String, password: String) {
         _isLoading.value = true
         viewModelScope.launch {
@@ -45,9 +46,11 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                     }
                 } else {
                     _isLogin.value = false
+                    Log.e("LoginViewModel", "Login failed: ${result.message}")
                 }
             } catch (e: Exception) {
                 _isLogin.value = false
+                Log.e("LoginViewModel", "Login failed with exception: ${e.message}", e)
             } finally {
                 _isLoading.value = false
             }
