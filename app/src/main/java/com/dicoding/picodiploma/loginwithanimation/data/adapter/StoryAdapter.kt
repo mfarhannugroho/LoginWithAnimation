@@ -12,7 +12,7 @@ import com.dicoding.picodiploma.loginwithanimation.data.response.ListStory
 
 class StoryAdapter(
     private val stories: List<ListStory>,
-    private val onItemClickListener: (ListStory) -> Unit
+    private val onItemClick: (ListStory) -> Unit
 ) : RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
@@ -23,7 +23,9 @@ class StoryAdapter(
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
         val story = stories[position]
         holder.bind(story)
-        holder.itemView.setOnClickListener { onItemClickListener(story) }
+        holder.itemView.setOnClickListener {
+            onItemClick(story)
+        }
     }
 
     override fun getItemCount(): Int = stories.size

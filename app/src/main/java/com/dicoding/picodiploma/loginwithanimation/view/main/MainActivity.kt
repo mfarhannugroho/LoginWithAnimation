@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.picodiploma.loginwithanimation.R
 import com.dicoding.picodiploma.loginwithanimation.data.adapter.StoryAdapter
+import com.dicoding.picodiploma.loginwithanimation.data.response.ListStory
 import com.dicoding.picodiploma.loginwithanimation.view.ViewModelFactory
 import com.dicoding.picodiploma.loginwithanimation.view.addstory.AddStoryActivity
 import com.dicoding.picodiploma.loginwithanimation.view.detail.DetailActivity
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.listStory.observe(this) { stories ->
             stories?.let {
-                storyAdapter = StoryAdapter(it) { story ->
+                storyAdapter = StoryAdapter(it) { story: ListStory ->
                     val intent = Intent(this, DetailActivity::class.java)
                     intent.putExtra(DetailActivity.EXTRA_STORY_ID, story.id)
                     startActivity(intent)
