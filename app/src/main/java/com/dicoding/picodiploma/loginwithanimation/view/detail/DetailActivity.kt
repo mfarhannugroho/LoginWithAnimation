@@ -27,7 +27,9 @@ class DetailActivity : AppCompatActivity() {
         if (storyId != null) {
             lifecycleScope.launch {
                 val story = viewModel.getStoryDetail(storyId)
-                displayStoryDetail(story)
+                if (story != null) {
+                    displayStoryDetail(story)
+                }
             }
         }
 

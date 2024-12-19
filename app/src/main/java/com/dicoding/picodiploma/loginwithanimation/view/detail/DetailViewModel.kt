@@ -8,10 +8,10 @@ import kotlinx.coroutines.withContext
 
 class DetailViewModel(private val storyIDRepository: StoryIDRepository) : ViewModel() {
 
-    suspend fun getStoryDetail(storyId: String): Story {
+    suspend fun getStoryDetail(storyId: String): Story? {
         return withContext(Dispatchers.IO) {
             val response = storyIDRepository.getStoryDetail(storyId).execute()
-            response.body()?.story ?: throw Exception("Story not found")
+            response.body()?.story
         }
     }
 }
